@@ -12,7 +12,7 @@ async function bootstrap() {
     logger: ["debug", "error", "log", "verbose", "warn"],
   });
 
-  app.use(cookieParser()); 
+  app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe());
 
   const configService = app.get(ConfigService);
