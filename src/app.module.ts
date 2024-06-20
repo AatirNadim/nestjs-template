@@ -1,10 +1,20 @@
 import { Module } from "@nestjs/common";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
+import { ConfigModule } from "@nestjs/config";
+// import { BookModule } from './book/book.module';
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { databaseConfig } from "./config/db.config";
+import { envValidationSchema } from "./config/envValidation.config";
+import { AuthModule } from "./auth/auth.module";
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    TypeOrmModule.forRootAsync(databaseConfig),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      // envFilePath: [`.env`],
+      validationSchema: envValidationSchema,
+    }),
+    AuthModule,
+  ],
 })
 export class AppModule {}
